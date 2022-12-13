@@ -105,10 +105,13 @@ DROP TABLE IF EXISTS `customer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) NOT NULL,
-  `ph_no` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `first_name` varchar(60) NOT NULL,
+  `ph_no` varchar(10) DEFAULT NULL,
+  `email` varchar(60) DEFAULT NULL,
+  `last_name` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +120,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'vikas','9888812341','vikasdub@yopmail.com','dube');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,11 +134,11 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int NOT NULL,
-  `order_date_time` timestamp NULL DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,12 +147,36 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,'2022-09-12 04:53:25'),(12,1,'2022-09-12 04:53:25'),(13,1,'2022-09-12 04:53:25'),(16,1,'2022-09-12 04:53:25');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'lib_management'
+-- Table structure for table `rln_books_orders`
 --
+
+DROP TABLE IF EXISTS `rln_books_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rln_books_orders` (
+  `book_id` int NOT NULL,
+  `order_id` int NOT NULL,
+  KEY `book_id` (`book_id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `rln_books_orders_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
+  CONSTRAINT `rln_books_orders_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rln_books_orders`
+--
+
+LOCK TABLES `rln_books_orders` WRITE;
+/*!40000 ALTER TABLE `rln_books_orders` DISABLE KEYS */;
+INSERT INTO `rln_books_orders` VALUES (1,1),(6,1),(30,1);
+/*!40000 ALTER TABLE `rln_books_orders` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -159,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-04 20:38:18
+-- Dump completed on 2022-12-13 23:00:58
