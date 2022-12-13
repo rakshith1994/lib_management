@@ -5,8 +5,9 @@ import cluster from 'cluster';
 import * as dotenv from 'dotenv'
 import bookRouter from './api/books/router.js';
 import authorRouter from './api/authors/router.js';
-import customerRouter from './api/authors/router.js';
+import customerRouter from './api/customers/router.js';
 import adminRouter from './api/admin/router.js';
+import orderRouter from './api/orders/router.js';
 import { signIn, refresh, authorize } from './handler.js';
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use('/api/authors',authorRouter);
 app.use('/api/books',bookRouter);
 app.use('/api/customers',customerRouter);
 app.use('/api/admin',adminRouter);
+app.use('/api/orders',orderRouter);
 app.post('/signIn',signIn);
 app.post('/refresh',refresh);
 
